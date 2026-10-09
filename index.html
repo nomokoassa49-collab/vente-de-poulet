@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facturation – Vente de poulet</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar no-print">
+    <h1>🧾 Générateur de factures</h1>
+    <nav>
+      <button id="btn-new" class="btn">Nouvelle facture</button>
+      <button id="btn-list" class="btn btn-secondary">Mes factures</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Liste des factures ===== -->
+    <section id="view-list" class="view hidden no-print">
+      <h2>Factures enregistrées</h2>
+      <p id="list-empty" class="muted hidden">Aucune facture pour le moment.</p>
+      <table class="table" id="invoice-table">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th class="num">Total</th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- ===== Formulaire ===== -->
+    <section id="view-form" class="view">
+      <form id="invoice-form" class="no-print" autocomplete="off">
+        <div class="grid-2">
+          <fieldset>
+            <legend>Vendeur</legend>
+            <label>Nom de l'entreprise
+              <input name="sellerName" required placeholder="Ex : Ferme Avicole Koffi" />
+            </label>
+            <label>Adresse
+              <textarea name="sellerAddress" rows="2" placeholder="Adresse, ville"></textarea>
+            </label>
+            <label>Téléphone
+              <input name="sellerPhone" placeholder="+225 00 00 00 00" />
+            </label>
+            <label>Email
+              <input name="sellerEmail" type="email" placeholder="contact@exemple.com" />
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Client</legend>
+            <label>Nom du client
+              <input name="clientName" required placeholder="Ex : Restaurant Le Soleil" />
+            </label>
+            <label>Adresse
+              <textarea name="clientAddress" rows="2" placeholder="Adresse, ville"></textarea>
+            </label>
+            <label>Téléphone
+              <input name="clientPhone" placeholder="Téléphone du client" />
+            </label>
+            <label>Email
+              <input name="clientEmail" type="email" placeholder="client@exemple.com" />
+            </label>
+          </fieldset>
+        </div>
+
+        <fieldset>
+          <legend>Détails de la facture</legend>
+          <div class="grid-4">
+            <label>N° de facture
+              <input name="number" required />
+            </label>
+            <label>Date d'émission
+              <input name="date" type="date" required />
+            </label>
+            <label>Date d'échéance
+              <input name="dueDate" type="date" />
+            </label>
+            <label>Devise
+              <input name="currency" value="FCFA" />
+            </label>
+          </div>
+          <div class="grid-2">
+            <label>TVA (%)
+              <input name="taxRate" type="number" min="0" step="0.01" value="0" />
+            </label>
+            <label>Remise (%)
+              <input name="discountRate" type="number" min="0" max="100" step="0.01" value="0" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Articles</legend>
+          <table class="table items" id="items-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th class="num">Quantité</th>
+                <th class="num">Prix unitaire</th>
+                <th class="num">Montant</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <button type="button" id="btn-add-item" class="btn btn-secondary">+ Ajouter un article</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Notes</legend>
+          <textarea name="notes" rows="2" placeholder="Conditions de paiement, coordonnées bancaires, mentions…"></textarea>
+        </fieldset>
+
+        <div class="totals-preview">
+          <div>Sous-total : <strong id="prev-subtotal">0</strong></div>
+          <div>Remise : <strong id="prev-discount">0</strong></div>
+          <div>TVA : <strong id="prev-tax">0</strong></div>
+          <div class="grand">Total TTC : <strong id="prev-total">0</strong></div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">💾 Enregistrer</button>
+          <button type="button" id="btn-print" class="btn btn-secondary">🖨️ Imprimer / PDF</button>
+          <button type="button" id="btn-reset" class="btn btn-danger">Réinitialiser</button>
+        </div>
+      </form>
+
+      <!-- ===== Aperçu imprimable ===== -->
+      <article id="invoice-preview" class="invoice"></article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
